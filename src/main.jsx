@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home.jsx";
-import ProfileCard from "./ProfileCard.jsx";
+import ProfileCard from "./Components/ProfileCard.jsx";
+import CounterApp from "./Components/CounterApp.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -10,6 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/profile-card" element={<ProfileCard />} />
+      <Route path="/counter-app" element={<CounterApp />} />
     </Routes>
   </BrowserRouter>
 );
