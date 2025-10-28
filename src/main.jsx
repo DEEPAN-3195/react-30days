@@ -7,6 +7,7 @@ import CounterApp from "./Components/CounterApp.jsx";
 import "./index.css";
 import TodoApp from "./Components/TodoApp.jsx";
 import DigitalClock from "./Components/DigitalClock.jsx";
+import Navbar from "./Components/Navbar.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/counter-app" element={<CounterApp />} />
       <Route path="/todo-list" element={<TodoApp />} />
       <Route path="/digital-clock" element={<DigitalClock />} />
+      <Route path="/navbar" element={<Navbar />} />
     </Routes>
   </BrowserRouter>
 );
