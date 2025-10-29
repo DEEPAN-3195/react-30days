@@ -8,6 +8,7 @@ import "./index.css";
 import TodoApp from "./Components/TodoApp.jsx";
 import DigitalClock from "./Components/DigitalClock.jsx";
 import Navbar from "./Components/Navbar.jsx";
+import PortfolioWebsite from "./Components/Portfolio-website/PortfolioWebsite.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/todo-list" element={<TodoApp />} />
       <Route path="/digital-clock" element={<DigitalClock />} />
       <Route path="/navbar" element={<Navbar />} />
+      <Route path="/portfolio/*" element={<PortfolioWebsite />} />
     </Routes>
   </BrowserRouter>
 );

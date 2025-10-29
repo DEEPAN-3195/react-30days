@@ -6,6 +6,7 @@ const projects = [
   { day: "05", title: "Todo List", path: "/todo-list" },
   { day: "07", title: "Digital Clock", path: "/digital-clock" },
   { day: "09", title: "NavBar", path: "/navbar" },
+  { day: "11", title: "Portfolio", path: "/portfolio" },
 ];
 
 export default function Home() {
