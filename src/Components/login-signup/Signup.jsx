@@ -1,12 +1,21 @@
 import { Link, redirect, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Signup() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-    let navigate = useNavigate();
-
-    let handleSumbit = (e) => {
+    const handleSumbit = (e) => {
         e.preventDefault();
+        if (!email || !password || !name) {
+            setError("Please fill in all fields.");
+            return;
+        }
         navigate("/login");
+
     }
 
     return (
@@ -22,9 +31,11 @@ export default function Signup() {
                             Name
                         </label>
                         <input
+                            value={name}
                             type="text"
                             placeholder="Enter your name"
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onChange={(e) => setName(e.target.value)}
                         />
                     </div>
 
@@ -33,9 +44,11 @@ export default function Signup() {
                             Email
                         </label>
                         <input
+                            value={email}
                             type="email"
                             placeholder="Enter your email"
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -44,9 +57,11 @@ export default function Signup() {
                             Password
                         </label>
                         <input
+                            value={password}
                             type="password"
                             placeholder="Create a password"
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
@@ -56,6 +71,9 @@ export default function Signup() {
                     >
                         Sign Up
                     </button>
+                    {error && (
+                        <p className="text-red-500 text-sm text-center">{error}</p>
+                    )}
                 </form>
 
                 <p className="text-sm text-center text-gray-600 mt-4">

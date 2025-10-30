@@ -4,11 +4,16 @@ export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     console.log(email);
 
     const navigate = useNavigate();
     const handleSumbit = (e) => {
         e.preventDefault();
+        if (!email || !password) {
+            setError("Please fill in all fields.");
+            return;
+        }
         navigate("/sucess-login")
     }
     return (
@@ -40,10 +45,12 @@ export default function Login() {
                             type="password"
                             placeholder="Enter your password"
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-
+                    {error && (
+                        <p className="text-red-500 text-sm text-center">{error}</p>
+                    )}
                     <button
                         type="submit"
                         className="w-full bg-indigo-600 text-white font-medium py-2 rounded-lg hover:bg-indigo-700 transition"
