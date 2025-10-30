@@ -9,6 +9,9 @@ import TodoApp from "./Components/TodoApp.jsx";
 import DigitalClock from "./Components/DigitalClock.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import PortfolioWebsite from "./Components/Portfolio-website/PortfolioWebsite.jsx";
+import Login from "./Components/login-signup/Login.jsx";
+import Signup from "./Components/login-signup/Signup.jsx";
+import SuccessLogin from "./Components/login-signup/SuccessLogin.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -20,6 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/digital-clock" element={<DigitalClock />} />
       <Route path="/navbar" element={<Navbar />} />
       <Route path="/portfolio/*" element={<PortfolioWebsite />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/sucess-login" element={<SuccessLogin />} />
     </Routes>
   </BrowserRouter>
 );
