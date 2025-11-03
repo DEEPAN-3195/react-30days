@@ -13,21 +13,24 @@ const projects = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-4xl font-bold text-center mb-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6 transition-colors duration-300">
+      <h1 className="text-4xl font-bold text-center mb-10 text-primary dark:text-secondary">
         🚀 React 30-Day Challenge
       </h1>
+
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
         {projects.map((p) => (
           <Link
             key={p.day}
             to={p.path}
-            className="block p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition"
+            className="block p-6 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 
+                       shadow-md rounded-xl hover:shadow-xl hover:bg-primary-light dark:hover:bg-secondary-dark 
+                       transition-all"
           >
-            <h2 className="text-xl font-semibold text-blue-600">
+            <h2 className="text-xl font-semibold text-primary dark:text-secondary">
               Day {p.day}
             </h2>
-            <p className="text-gray-700 mt-2">{p.title}</p>
+            <p className="mt-2">{p.title}</p>
           </Link>
         ))}
       </div>

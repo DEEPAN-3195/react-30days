@@ -13,10 +13,13 @@ import Login from "./Components/login-signup/Login.jsx";
 import Signup from "./Components/login-signup/Signup.jsx";
 import SuccessLogin from "./Components/login-signup/SuccessLogin.jsx";
 import WeatherApp from "./Components/weather-app/Weather.jsx";
+import { ThemeProvider, } from "./Components/ThemeContext/ThemeContext.jsx";
+import ThemeToggle from "./Components/ThemeContext/ThemeToggle.jsx";
 
 export default function App() {
   return (
     <BrowserRouter >
+      <ThemeToggle />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile-card" element={<ProfileCard />} />
@@ -29,6 +32,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/sucess-login" element={<SuccessLogin />} />
         <Route path="/weather" element={<WeatherApp />} />
+
       </Routes>
     </BrowserRouter >
   )
