@@ -9,12 +9,11 @@ import Footer from "./Footer.jsx";
 
 export default function PortfolioWebsite() {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen pt-[73px]">
             <Navbar />
 
             <main className="flex-grow">
                 <Routes>
-                    {/* Default: /portfolio → Home */}
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="projects" element={<Projects />} />

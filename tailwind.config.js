@@ -6,14 +6,28 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#2563EB", // blue-600
-          light: "#3B82F6", // blue-500
-          dark: "#1E3A8A", // blue-900
+          light: "#6EE7B7", // Light mint
+          DEFAULT: "#10B981", // Emerald main
+          dark: "#065F46", // Deep forest green
+          hover: "#34D399", // Mid-light hover
+          soft: "#D1FAE5", // Subtle green tint background
+          contrast: "#FFFFFF", // White text on green bg
         },
         secondary: {
-          DEFAULT: "#9333EA", // purple-600
-          light: "#A855F7", // purple-500
-          dark: "#581C87", // purple-900
+          light: "#5EEAD4", // Soft teal
+          DEFAULT: "#14B8A6", // Teal main accent
+          dark: "#0F766E", // Dark teal
+          hover: "#2DD4BF", // Gentle hover glow
+          soft: "#CCFBF1", // Light aqua tint
+          contrast: "#F0FDFA", // Off-white text
+        },
+        neutral: {
+          light: "#ECFDF5", // Light minty white
+          dark: "#0F172A", // Deep bluish-gray (dark mode)
+          card: "#1E293B", // Card bg for dark mode
+          border: "#164E63", // Muted teal border
+          textLight: "#A7F3D0", // Text in dark mode
+          textDark: "#064E3B", // Text for light mode
         },
       },
     },

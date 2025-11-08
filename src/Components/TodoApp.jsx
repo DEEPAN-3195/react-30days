@@ -1,129 +1,193 @@
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
-export default function TodoApp() {
 
-    let [items, setItems] = useState(
-        [
-            { id: 1, task: "React jsx", checked: true },
-            { id: 2, task: "Html & Css", checked: true },
-            { id: 3, task: "JavaScript", checked: false },
+function TaskColumn({ title, tasks, isEditing, currentEleId, editText, setEditText, handleUpdate, handleDelete, handleSave, handleCancel, checkedStatus }) {
+    return (
+        <div className="flex-1">
+            <h2 className="text-lg font-semibold mb-2 text-neutral-textDark dark:text-neutral-textLight">
+                {title} ({tasks.length})
+            </h2>
+            {tasks.length === 0 ? (
+                <p className="text-gray-500 dark:text-gray-400">No tasks</p>
+            ) : (
+                <ul className="space-y-2">
+                    {tasks.map((item) => (
+                        <li
+                            key={item.id}
+                            className="flex items-center justify-between bg-neutral-soft dark:bg-neutral-dark border border-neutral-border rounded-lg px-3 py-2 transition"
+                        >
+                            <div className="flex items-center gap-2">
+                                <input
+                                    type="checkbox"
+                                    checked={item.checked}
+                                    onChange={() => checkedStatus(item.id)}
+                                    className="w-5 h-5 text-primary focus:ring-primary-hover accent-primary-dark dark:accent-primary-light"
+                                />
+                                {isEditing && currentEleId === item.id ? (
+                                    <input
+                                        type="text"
+                                        value={editText}
+                                        onChange={(e) => setEditText(e.target.value)}
+                                        className="border-b border-primary focus:outline-none focus:border-primary-hover bg-transparent px-1 text-neutral-textDark dark:text-neutral-textLight"
+                                        autoFocus
+                                    />
+                                ) : (
+                                    <span className={`${item.checked ? "line-through text-secondary-light dark:text-secondary-soft" : "text-neutral-textDark dark:text-neutral-textLight"}`}>
+                                        {item.task}
+                                    </span>
+                                )}
+                            </div>
 
-        ]
+                            <div className="flex items-center gap-2">
+                                {isEditing && currentEleId === item.id ? (
+                                    <>
+                                        <button
+                                            onClick={handleSave}
+                                            className="bg-primary hover:bg-primary-hover text-white dark:bg-primary-dark dark:hover:bg-primary text-primary-contrast font-semibold px-3 py-1 rounded-lg transition"
+                                        >
+                                            Save
+                                        </button>
+                                        <button
+                                            onClick={handleCancel}
+                                            className="bg-gray-400 hover:bg-gray-500 text-white font-semibold px-3 py-1 rounded-lg transition"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            className="text-secondary hover:text-secondary-hover transition"
+                                            onClick={() => handleUpdate(item.id)}
+                                        >
+                                            <FaEdit />
+                                        </button>
+                                        <button
+                                            disabled={isEditing}
+                                            className={`text-primary hover:text-primary-hover transition ${isEditing ? "cursor-not-allowed opacity-50" : ""}`}
+                                            onClick={() => handleDelete(item.id)}
+                                        >
+                                            <FaRegTrashCan />
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
     );
-    let [newItems, setNewItems] = useState("");
-    let [editText, setEditText] = useState("");
-    let [isEditing, setIsEditing] = useState(false);
-    let [currentEleId, setCurrentEleId] = useState(null);
+}
 
-    function checkedStatus(id) {
-        let newListItem = items.map((item) => {
-            return item.id === id ? { ...item, checked: !item.checked } : item;
-        })
-        setItems(newListItem);
-        console.log(items);
-    }
-    function handleUpdate(id) {
-        setNewItems("");
-        let listItem = items.find(item => item.id === id);
-        setEditText(listItem.task)
+export default function TodoApp() {
+    const [items, setItems] = useState([
+        { id: 1, task: "React JSX", checked: true },
+        { id: 2, task: "HTML & CSS", checked: true },
+        { id: 3, task: "JavaScript", checked: false },
+    ]);
+
+    const [newItems, setNewItems] = useState("");
+    const [editText, setEditText] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
+    const [currentEleId, setCurrentEleId] = useState(null);
+
+    const checkedItems = items.filter((item) => item.checked);
+    const uncheckedItems = items.filter((item) => !item.checked);
+
+    const checkedStatus = (id) =>
+        setItems(items.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item)));
+
+    const handleUpdate = (id) => {
+        const item = items.find((i) => i.id === id);
+        setEditText(item.task);
         setIsEditing(true);
         setCurrentEleId(id);
-    }
-    function handleAddorSave() {
-        if (isEditing) {
-            let newListItem = items.map(item => {
-                return currentEleId === item.id ? { ...item, task: editText } : item
-            })
-            setItems(newListItem);
-            setCurrentEleId(null);
-            setNewItems("");
-            setIsEditing(false);
-        }
-        else {
-            setItems([...items, { id: items.length + 1, task: newItems, checked: false }]);
-        }
         setNewItems("");
-    }
-    function handleDelete(id) {
-        let newItems = items.filter((item) => item.id !== id).map((item, index) => { return { ...item, id: index + 1 } }); //chaining call
-        setItems(newItems);
-    }
+    };
 
+    const handleSave = () => {
+        setItems(items.map((item) => (item.id === currentEleId ? { ...item, task: editText } : item)));
+        setIsEditing(false);
+        setCurrentEleId(null);
+        setEditText("");
+    };
+
+    const handleCancel = () => {
+        setIsEditing(false);
+        setCurrentEleId(null);
+        setEditText("");
+    };
+
+    const handleAdd = () => {
+        if (!newItems.trim()) return;
+        setItems([...items, { id: items.length + 1, task: newItems, checked: false }]);
+        setNewItems("");
+    };
+
+    const handleDelete = (id) => {
+        setItems(items.filter((item) => item.id !== id).map((item, index) => ({ ...item, id: index + 1 })));
+    };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-            <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
-                <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">
-                    Todo List
+        <div className="pt-20 min-h-screen flex flex-col items-center bg-neutral-light dark:bg-neutral-dark p-4 transition-colors duration-300">
+            <div className="w-full max-w-4xl bg-white dark:bg-neutral-card rounded-2xl shadow-xl p-6 border border-neutral-border transition-colors duration-300">
+                <h1 className="text-2xl font-bold text-center text-primary-dark dark:text-primary-light mb-6">
+                    ✅ Todo List
                 </h1>
 
-                <div className="flex gap-2 mb-4">
+                {/* Input */}
+                <div className="flex gap-2 mb-6">
                     <input
                         value={newItems}
                         type="text"
                         placeholder="Enter a new task..."
-                        className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        className="flex-1 border border-neutral-border rounded-lg px-3 py-2 bg-neutral-soft text-neutral-textDark dark:bg-neutral-card dark:text-neutral-textLight focus:outline-none focus:ring-2 focus:ring-primary-hover transition"
                         onChange={(e) => setNewItems(e.target.value)}
                         disabled={isEditing}
                     />
-                    <button onClick={handleAddorSave} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-lg" disabled={isEditing}>
+                    <button
+                        onClick={handleAdd}
+                        disabled={isEditing}
+                        className={`px-4 py-2 font-semibold rounded-lg transition ${isEditing
+                            ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                            : "bg-primary hover:bg-primary-hover text-white dark:bg-primary-dark dark:hover:bg-primary text-primary-contrast"
+                            }`}
+                    >
                         Add
                     </button>
                 </div>
 
-                {/* Todo List */}
-                <ul className="space-y-2">
-                    {
-                        items.map((item) => {
-                            return (
-                                <li key={item.id} className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
-                                    <div className="flex items-center gap-2">
-                                        <input type="checkbox" className="w-5 h-5 text-indigo-600" checked={item.checked} onChange={() => { checkedStatus(item.id) }} />
-                                        {isEditing && currentEleId === item.id ? (
-                                            <input
-                                                type="text"
-                                                value={editText}
-                                                onChange={(e) => setEditText(e.target.value)}
-                                                className="border-b border-gray-400 focus:outline-none focus:border-indigo-500 px-1"
-                                                autoFocus
-                                            />
-                                        ) : (
-                                            <span className="text-gray-800">{item.task}</span>
-                                        )}
-
-
-                                    </div>
-                                    <div className="space-x-2 flex items-center">
-                                        {isEditing && currentEleId === item.id ? (
-                                            <button
-                                                onClick={handleAddorSave}
-                                                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-1 rounded-lg"
-                                            >
-                                                Save
-                                            </button>
-                                        ) : (
-                                            <>
-                                                <button
-                                                    className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                                                    onClick={() => handleUpdate(item.id)}
-                                                >
-                                                    <FaEdit />
-                                                </button>
-                                                <button
-                                                    className="text-rose-600 hover:text-rose-800 text-sm font-medium"
-                                                    onClick={() => handleDelete(item.id)}
-                                                >
-                                                    <FaRegTrashCan />
-                                                </button>
-                                            </>
-                                        )}
-                                    </div>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
+                {/* Two Columns */}
+                <div className="flex flex-col md:flex-row gap-6">
+                    <TaskColumn
+                        title="📝 Pending Tasks"
+                        tasks={uncheckedItems}
+                        isEditing={isEditing}
+                        currentEleId={currentEleId}
+                        editText={editText}
+                        setEditText={setEditText}
+                        handleUpdate={handleUpdate}
+                        handleDelete={handleDelete}
+                        handleSave={handleSave}
+                        handleCancel={handleCancel}
+                        checkedStatus={checkedStatus}
+                    />
+                    <TaskColumn
+                        title="✅ Completed Tasks"
+                        tasks={checkedItems}
+                        isEditing={isEditing}
+                        currentEleId={currentEleId}
+                        editText={editText}
+                        setEditText={setEditText}
+                        handleUpdate={handleUpdate}
+                        handleDelete={handleDelete}
+                        handleSave={handleSave}
+                        handleCancel={handleCancel}
+                        checkedStatus={checkedStatus}
+                    />
+                </div>
             </div>
         </div>
     );

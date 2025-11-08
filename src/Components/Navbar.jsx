@@ -1,68 +1,28 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import ThemeToggle from "./ThemeContext/ThemeToggle";
 
 export default function Navbar() {
-    const [open, setOpen] = useState(false);
-
-    const links = [
-        { name: "Home", path: "/" },
-        { name: "About", path: "/about" },
-        { name: "Services", path: "/services" },
-        { name: "Contact", path: "/contact" },
-    ];
-
     return (
-        <nav className="bg-white shadow-md fixed w-full z-10">
-            <div className="max-w-6xl mx-auto px-4 flex justify-between items-center h-16">
+        <nav className="fixed top-0 left-0 w-full h-[10vh] bg-neutral-light dark:bg-neutral-dark shadow-md z-50 flex items-center border-b border-neutral-border transition-colors duration-300">
+            <div className="relative max-w-6xl mx-auto w-full px-4 flex items-center justify-between">
                 {/* Logo */}
-                <Link to="/" className="text-2xl font-bold text-indigo-600">
+                <Link
+                    to="/"
+                    className="text-2xl font-bold text-primary dark:text-primary-light hover:text-primary-hover transition-colors duration-300"
+                >
                     MyApp
                 </Link>
 
-                {/* Desktop Links */}
-                <div className="hidden md:flex space-x-6">
-                    {links.map((link) => (
-                        <NavLink
-                            key={link.name}
-                            to={link.path}
-                            className={({ isActive }) =>
-                                `text-gray-700 hover:text-indigo-600 transition ${isActive ? "font-semibold text-indigo-600" : ""
-                                }`
-                            }
-                        >
-                            {link.name}
-                        </NavLink>
-                    ))}
-                </div>
+                {/* Title */}
+                <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl md:text-3xl font-bold text-secondary dark:text-secondary-light">
+                    🚀 React 30-Day Challenge
+                </h1>
 
-                {/* Mobile Menu Button */}
-                <button
-                    onClick={() => setOpen(!open)}
-                    className="md:hidden text-gray-700"
-                >
-                    {open ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                {/* Theme Toggle */}
+                <div className="flex items-center">
+                    <ThemeToggle />
+                </div>
             </div>
-
-            {/* Mobile Links */}
-            {open && (
-                <div className="md:hidden bg-white shadow-md">
-                    {links.map((link) => (
-                        <NavLink
-                            key={link.name}
-                            to={link.path}
-                            onClick={() => setOpen(false)}
-                            className={({ isActive }) =>
-                                `block px-4 py-2 text-gray-700 hover:bg-indigo-50 ${isActive ? "font-semibold text-indigo-600" : ""
-                                }`
-                            }
-                        >
-                            {link.name}
-                        </NavLink>
-                    ))}
-                </div>
-            )}
         </nav>
     );
 }

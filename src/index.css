@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --color-primary: #2563eb;
   --color-secondary: #9333ea;
 }
@@ -10,4 +10,4 @@
 .dark {
   --color-primary: #1e40af;
   --color-secondary: #7e22ce;
-}
+} */

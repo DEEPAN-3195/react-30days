@@ -7,7 +7,7 @@ export default function ThemeToggle() {
     return (
         <button
             onClick={toggleTheme}
-            className="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-all"
+            className="fixed top-4 right-4 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-all"
         >
             {theme === "light" ? (
                 <Moon className="text-gray-800" />
